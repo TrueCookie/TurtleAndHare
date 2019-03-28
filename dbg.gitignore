@@ -1,6 +1,6 @@
 # Lines starting with '#' are considered comments.
 # Ignore any file named foo.txt.
-Debag.o
+/Debug
 # Ignore (generated) html files,
 #*.html
 # except foo.html which is maintained by hand.
