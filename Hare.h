@@ -5,5 +5,6 @@ public:
 	Hare();
 	~Hare();
 	int defMove();
+	void isBitten();
 };
 

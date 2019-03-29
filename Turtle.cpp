@@ -3,8 +3,8 @@
 Turtle::Turtle(){
 	_energy = 20;
 	_name = 'T';
+	_type = "turtle";
 }
-
 
 Turtle::~Turtle(){}
 

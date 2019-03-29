@@ -26,7 +26,7 @@ void Path::writeOuch(int pos) {
 	}
 }
 
-bool Path::move(Animal** racers) {
+/*bool Path::move(Animal** racers) {
 	for (int i = 0; i < racersNum; ++i) {//move racers
 		racersPos[i] += racers[i]->defMove();
 		if (racersPos[i] < 0) {	//check out of range case
@@ -38,21 +38,16 @@ bool Path::move(Animal** racers) {
 		}
 	}
 	return false;
-}
+}*/
 
 
 void Path::printEnd(char name) {
 	std::cout << name << " won" << std::endl;
 }
 
-bool Path::update(Animal** racers) {
-	move(racers);
-	char* curTrack = new char[70];
-	tracks.push_back(curTrack);
-	memset(curTrack, ' ', 70);
-	//checking collusion for everyone
-	for (int i = 0; i < racersNum-1; ++i){
-		for (int j = i+1; j < racersNum; ++j) {
+void Path::checkCollusion(char** curTrack) {
+	for (int i = 0; i < racersNum - 1; ++i) {
+		for (int j = i + 1; j < racersNum; ++j) {
 			if (racersPos[i] != racersPos[j]) {
 				curTrack[racersPos[i]] = racers[i]->getName();
 			}
@@ -61,5 +56,15 @@ bool Path::update(Animal** racers) {
 			}
 		}
 	}
+}
+
+bool Path::update(Animal** racers) {
+	char* curTrack = new char[70];
+	memset(curTrack, ' ', 70);
+	for (int i = 0; i < racersNum; ++i) {
+		curTrack[racers[i]->getPos()] = racers[i]->getName();
+	}
+	checkCollusion(&curTrack);
+	tracks.push_back(curTrack);
 	return false;
 } 

@@ -3,6 +3,7 @@
 Hare::Hare(){
 	_energy = 20;
 	_name = 'H';
+	_type = "hare";
 }
 
 Hare::~Hare(){}
@@ -24,4 +25,8 @@ int Hare::defMove() {
 	else if (randNum >= 9 && randNum <= 10) {
 		return -2;
 	}
+}
+
+void Hare::isBitten() {
+	_energy -= 5;
 }
