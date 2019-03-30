@@ -1,20 +1,20 @@
 #pragma once
 #include "Animal.h"
 #include <vector>
+#include <string>
 class Path{
 private:
-	int racersNum;
-
 	int tracksNum;
-	std::vector<char*> tracks;
+	std::vector<std::string> tracks;
+	std::string* curTrack;
 	int* racersPos;
 public:
-	Path(int racersNum);
+	Path();
 	~Path();
 	void print();
-	//bool move(Animal** racers);
-	void checkCollusion(char** curTrack);
-	bool update(Animal** racers);
+	void update();
+	bool fillNewPath(Animal** racers);
 	void writeOuch(int pos);
 	void printEnd(char name);
+	std::string* getCurTrack();
 };

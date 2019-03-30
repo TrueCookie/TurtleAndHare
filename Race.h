@@ -1,4 +1,5 @@
 #pragma once
+#include "Init.h"
 #include "Animal.h"
 #include "Hare.h"
 #include "Turtle.h"
@@ -8,15 +9,16 @@
 class Race{
 private:
 	Path *path;
-	int racersNum;
 	Animal** racers;
+	bool finish;
 public:
-	Race(Animal** animals, int racersNum);
+	Race(Animal** animals);
 	~Race();
+	void move();
 	bool update();
 	void process();
 	void printEnergy();
-	bool finish();
-	void move(int* racerShift);
+	void checkCollusion(std::string* curTrack);
+	bool finished();
 };
 

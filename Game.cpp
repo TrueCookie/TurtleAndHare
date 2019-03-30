@@ -10,7 +10,7 @@ Game::Game(){
 Game::~Game(){}
 
 void Game::start() {
-	Race race(defRacersType(racersNum), racersNum);
+	Race race(defRacersType(racersNum));
 	race.process();
 }
 

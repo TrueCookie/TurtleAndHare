@@ -23,13 +23,14 @@ bool Animal::isFinished() {
 }
 
 bool Animal::setPos() {
-		_pos += defMove();
-		if (isOut()) {	//check out of range case
+	_pos += defMove();
+	if (isOut()) {	//check out of range case
 			_pos = 0;
-		}
-		else if (isFinished()) {	//racer won
+	}
+	else if (isFinished()) {	//racer won
 			return true;
-		}
+	}
+	return false;
 }
 
 int Animal::getPos() {
@@ -49,4 +50,3 @@ void Animal::setName() {
 char Animal::getName() {
 	return _name;
 }
-
