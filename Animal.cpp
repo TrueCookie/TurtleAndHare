@@ -19,16 +19,17 @@ bool Animal::isOut() {
 }
 
 bool Animal::isFinished() {
-	return _pos > 69;
+	return _pos >= 69;
 }
 
 bool Animal::setPos() {
 	_pos += defMove();
-	if (isOut()) {	//check out of range case
-			_pos = 0;
+	if (isOut()) {
+		_pos = 0;
 	}
-	else if (isFinished()) {	//racer won
-			return true;
+	else if (isFinished()) {
+		_pos = 69;
+		return true;
 	}
 	return false;
 }
@@ -41,10 +42,8 @@ int Animal::getEnergy() {
 	return _energy;
 }
 
-void Animal::setName() {
-	char name = 'X';
-	std::cin >> name;
-	_name = name;
+std::string Animal::getType() {
+	return _type;
 }
 
 char Animal::getName() {

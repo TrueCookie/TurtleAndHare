@@ -10,7 +10,7 @@ Hare::~Hare(){}
 
 int Hare::defMove() {
 	int randNum = defNum();
-	if (randNum >= 1 && randNum <= 2) {
+	if (randNum <= 2) {
 		return 0;
 	}
 	else if(randNum >= 3 && randNum <= 4){
@@ -22,7 +22,7 @@ int Hare::defMove() {
 	else if (randNum >= 6 && randNum <= 8) {
 		return 1;
 	}
-	else if (randNum >= 9 && randNum <= 10) {
+	else if (randNum >= 9) {
 		return -2;
 	}
 }

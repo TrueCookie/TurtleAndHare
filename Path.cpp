@@ -27,11 +27,29 @@ void Path::printEnd(char name) {
 	std::cout << name << " won" << std::endl;
 }
 
-bool Path::fillNewPath(Animal** racers) {
-	curTrack = new std::string(Init::width, ' ');
-	for (int i = 0; i < Init::racersNum; ++i) {
-		curTrack[racers[i]->getPos()] = racers[i]->getName();
+void fillWithSpace(std::string &str) {
+	for (int i = 0; i < Init::width; ++i) {
+		str[i] = ' ';
 	}
+}
+
+void Path::checkCollusion(Animal** racers) {
+	for (int i = 0; i < Init::racersNum; ++i) {
+		for (int j = i + 1; j < Init::racersNum; ++j) {
+			if (racers[i]->getPos() == racers[j]->getPos()) {
+				writeOuch(racers[i]->getPos());
+			}
+		}
+	}
+}
+
+bool Path::fillNewPath(Animal** racers) {
+	std::string* track = new std::string(Init::width, ' ');
+	for (int i = 0; i < Init::racersNum; ++i) {
+		(*track)[racers[i]->getPos()] = racers[i]->getName();
+	}
+	checkCollusion(racers);
+	curTrack = track;
 	return false;
 }
 void Path::update() {

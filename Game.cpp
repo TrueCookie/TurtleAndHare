@@ -3,7 +3,7 @@
 #include <iostream>
 
 Game::Game(){
-	racersNum = defRacersNum();
+	racersNum = Init::racersNum;
 }
 
 

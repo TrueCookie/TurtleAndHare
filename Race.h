@@ -4,6 +4,8 @@
 #include "Hare.h"
 #include "Turtle.h"
 #include "Path.h"
+#include <utility>
+#include <string>
 
 
 class Race{
@@ -11,6 +13,7 @@ private:
 	Path *path;
 	Animal** racers;
 	bool finish;
+	std::pair<std::string, std::string> winner;
 public:
 	Race(Animal** animals);
 	~Race();
@@ -18,7 +21,7 @@ public:
 	bool update();
 	void process();
 	void printEnergy();
-	void checkCollusion(std::string* curTrack);
 	bool finished();
+	void end();
 };
 

@@ -15,6 +15,7 @@ public:
 	bool setPos();
 	int getPos();
 	int getEnergy();
+	std::string getType();
 	void setName();
 	char getName();
 	void medHelp();

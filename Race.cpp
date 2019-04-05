@@ -24,39 +24,39 @@ bool Race::update() {
 }
 
 void Race::process() {
+	time_t prevTime = 0;
 	while(!finished()){
-		this->update();
-		path->fillNewPath(racers);
-		path->update();
-		path->print();
-		checkCollusion(path->getCurTrack());
-		this->printEnergy();
+		if (time(nullptr) - prevTime >= 1) {
+			move();
+			path->fillNewPath(racers);
+			path->update();
+			path->print();
+			this->printEnergy();
+			prevTime = time(nullptr);
+		}
+		
 	}
+	end();
+}
+
+void Race::end() {
+	std::cout << winner.first << " " << winner.second << " win!!!" << std::endl << "Congratulations!!!";
 }
 
 void Race::move() {
 	for (int i = 0; i < Init::racersNum; ++i) {
 		finish = racers[i]->setPos();
+		if (finish) {
+			winner = std::make_pair(racers[i]->getType(), racers[i]->getName());
+		}
 	}
 }
 
 void Race::printEnergy() {
+	std::cout << "| Energy: ";
 	for (int i = 0; i < Init::racersNum; ++i) {
-		std::cout << racers[i]->getName() << ": " << racers[i]->getEnergy() << ' / ';
+		std::cout << racers[i]->getName() << ": " << racers[i]->getEnergy() << " / ";
 	}std::cout << std::endl;
-}
-
-void Race::checkCollusion(std::string* curTrack) {
-	for (int i = 0; i < Init::racersNum - 1; ++i) {
-		for (int j = i + 1; j < Init::racersNum; ++j) {
-			if (racers[i]->getPos() != racers[j]->getPos()) {
-				curTrack[racers[i]->getPos()] = racers[i]->getName();
-			}
-			else {
-				path->writeOuch(racers[i]->getPos());
-			}
-		}
-	}
 }
 
 bool Race::finished() {

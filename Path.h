@@ -13,6 +13,7 @@ public:
 	~Path();
 	void print();
 	void update();
+	void checkCollusion(Animal** racers);
 	bool fillNewPath(Animal** racers);
 	void writeOuch(int pos);
 	void printEnd(char name);
