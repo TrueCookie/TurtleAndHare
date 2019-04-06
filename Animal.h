@@ -21,4 +21,5 @@ public:
 	bool isOut();
 	bool isFinished();
 	void eatSnack();
+	void bite();
 };

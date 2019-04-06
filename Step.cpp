@@ -30,3 +30,7 @@ void Step::putSnack() {
 bool Step::isSnack() {
 	return _snack;
 }
+
+void Step::rmSnack() {
+	_snack = false;
+}

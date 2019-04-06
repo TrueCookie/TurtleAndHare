@@ -12,6 +12,7 @@ public:
 	void setEmpty();
 	bool isEmpty();
 	void putSnack();
+	void rmSnack();
 	bool isSnack();
 };
 

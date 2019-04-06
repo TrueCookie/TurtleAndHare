@@ -26,7 +26,3 @@ int Hare::defMove() {
 		return -2;
 	}
 }
-
-void Hare::bite() {
-	_energy -= 5;
-}

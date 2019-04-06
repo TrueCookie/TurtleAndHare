@@ -51,5 +51,14 @@ char Animal::getName() {
 }
 
 void Animal::eatSnack() {
-	_energy = 20;
+	if (_energy >= 25) {
+		_energy = 20;
+	}
+	else {
+		_energy += 5;
+	}
+}
+
+void Animal::bite() {
+	_energy -= 10;
 }

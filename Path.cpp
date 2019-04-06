@@ -6,6 +6,7 @@
 Path::Path(){
 	tracksNum = 0;
 	racersPos = new int[Init::racersNum];
+	curTrack = nullptr;
 }
 
 Path::~Path(){
@@ -29,20 +30,30 @@ void Path::printEnd(char name) {
 	std::cout << name << " won" << std::endl;
 }
 
-void Path::pasteItems(Step*) {
+void Path::pasteItems(Step* steps) {
 	for (int i = 0; i < Init::width; ++i) {
-		if()
+		if (steps[i].isSnack()) {
+			this->step[i].putSnack();
+		}
 	}
 }
 
 bool Path::fillNewPath(Animal** racers) {
 	Step* track = new Step[Init::width];
-	track->pasteItems();
+	if (curTrack != nullptr) {
+		pasteItems(curTrack);
+	}
 	for (int i = 0; i < Init::racersNum; ++i) {
 		if (track[racers[i]->getPos()].isEmpty()) {
 			track[racers[i]->getPos()].setOccupant(racers[i]->getName());
-			if()
+			if (track[racers[i]->getPos()].isSnack()) {
+				racers[i]->eatSnack();
+				track[racers[i]->getPos()].rmSnack();
+			}
 		}else {
+			if (racers[i]->getType() == "hare") {
+				racers[i]->bite();
+			}
 			writeOuch(racers[i]->getPos());
 		}
 	}
