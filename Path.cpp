@@ -13,13 +13,15 @@ Path::~Path(){
 }
 
 void Path::print() {
-	std::cout << tracks.back();
+	for (int i = 0; i < Init::width; ++i) {
+		std::cout << tracks.back()[i].getOccupant();
+	}
 }
 
 void Path::writeOuch(int pos) {
 	std::string ouch("OUCH!!!");
 	for (int i = pos; i < pos + 7; ++i) {
-		(tracks.back()).at(i) = ouch[i-pos];
+		(tracks.back())[i].setOccupant(ouch[pos + i]);
 	}
 }
 
@@ -27,36 +29,32 @@ void Path::printEnd(char name) {
 	std::cout << name << " won" << std::endl;
 }
 
-void fillWithSpace(std::string &str) {
+void Path::pasteItems(Step*) {
 	for (int i = 0; i < Init::width; ++i) {
-		str[i] = ' ';
-	}
-}
-
-void Path::checkCollusion(Animal** racers) {
-	for (int i = 0; i < Init::racersNum; ++i) {
-		for (int j = i + 1; j < Init::racersNum; ++j) {
-			if (racers[i]->getPos() == racers[j]->getPos()) {
-				writeOuch(racers[i]->getPos());
-			}
-		}
+		if()
 	}
 }
 
 bool Path::fillNewPath(Animal** racers) {
-	std::string* track = new std::string(Init::width, ' ');
+	Step* track = new Step[Init::width];
+	track->pasteItems();
 	for (int i = 0; i < Init::racersNum; ++i) {
-		(*track)[racers[i]->getPos()] = racers[i]->getName();
+		if (track[racers[i]->getPos()].isEmpty()) {
+			track[racers[i]->getPos()].setOccupant(racers[i]->getName());
+			if()
+		}else {
+			writeOuch(racers[i]->getPos());
+		}
 	}
-	checkCollusion(racers);
 	curTrack = track;
 	return false;
 }
+
 void Path::update() {
-	tracks.push_back(*curTrack);
+	tracks.push_back(curTrack);
 	tracksNum++;
 }
 
-std::string* Path::getCurTrack() {
+Step* Path::getCurTrack() {
 	return curTrack;
 }

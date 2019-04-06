@@ -49,3 +49,7 @@ std::string Animal::getType() {
 char Animal::getName() {
 	return _name;
 }
+
+void Animal::eatSnack() {
+	_energy = 20;
+}

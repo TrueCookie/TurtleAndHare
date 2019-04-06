@@ -1,10 +1,17 @@
 #pragma once
 class Step{
 private:
-	char occupant;
-	bool snack;
+	char _occupant;
+	bool _snack;
 public:
 	Step();
 	~Step();
+
+	char getOccupant();
+	void setOccupant(char occup);
+	void setEmpty();
+	bool isEmpty();
+	void putSnack();
+	bool isSnack();
 };
 

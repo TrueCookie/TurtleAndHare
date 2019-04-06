@@ -27,6 +27,6 @@ int Hare::defMove() {
 	}
 }
 
-void Hare::isBitten() {
+void Hare::bite() {
 	_energy -= 5;
 }

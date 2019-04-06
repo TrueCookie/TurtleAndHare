@@ -18,7 +18,6 @@ public:
 	std::string getType();
 	void setName();
 	char getName();
-	void medHelp();
 	bool isOut();
 	bool isFinished();
 	void eatSnack();
