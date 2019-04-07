@@ -25,11 +25,9 @@ bool Race::update() {
 
 void Race::process() {
 	time_t prevTime = 0;
-	while(!finished()){
+	while(!(path->getFinishFlag())){
 		if (time(nullptr) - prevTime >= 1) {
-			move();
-			path->fillNewPath(racers);
-			path->update();
+			path->update(racers);
 			path->print();
 			this->printEnergy();
 			prevTime = time(nullptr);

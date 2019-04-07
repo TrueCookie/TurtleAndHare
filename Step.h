@@ -10,7 +10,7 @@ public:
 	char getOccupant();
 	void setOccupant(char occup);
 	void setEmpty();
-	bool isEmpty();
+	bool isOccup();
 	void putSnack();
 	void rmSnack();
 	bool isSnack();

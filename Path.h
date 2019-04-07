@@ -5,19 +5,18 @@
 #include <string>
 class Path{
 private:
-	int tracksNum;
 	Step* step = new Step;
-	std::vector<Step*> tracks;
-	Step* curTrack;
+	Step* track;
 	int* racersPos;
+	bool finishFlag;
 public:
 	Path();
 	~Path();
+	void initTrack();
 	void print();
-	void update();
-	void pasteItems(Step*);
-	bool fillNewPath(Animal** racers);
+	void update(Animal** racers);
+	//void fillNewPath(Animal** racers);
 	void writeOuch(int pos);
 	void printEnd(char name);
-	Step* getCurTrack();
+	bool getFinishFlag();
 };

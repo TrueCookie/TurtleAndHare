@@ -19,8 +19,8 @@ void Step::setEmpty() {
 	_occupant = ' ';
 }
 
-bool Step::isEmpty() {
-	return _occupant == ' ';
+bool Step::isOccup() {
+	return (_occupant != ' ' && _occupant != '@');
 }
 
 void Step::putSnack() {

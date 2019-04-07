@@ -4,25 +4,35 @@
 #include <string>
 
 Path::Path(){
-	tracksNum = 0;
 	racersPos = new int[Init::racersNum];
-	curTrack = nullptr;
+	track = new Step[Init::width];
+	initTrack();
+	finishFlag = false;
 }
 
 Path::~Path(){
 	//delete[] tracks;
 }
 
+void Path::initTrack() {
+	for (int i = 0; i < Init::width; ++i) {
+		if (i % 10 == 0) {
+			track[i].setOccupant('@');
+		}
+	}
+}
+
 void Path::print() {
 	for (int i = 0; i < Init::width; ++i) {
-		std::cout << tracks.back()[i].getOccupant();
+		std::cout << track[i].getOccupant();
 	}
 }
 
 void Path::writeOuch(int pos) {
 	std::string ouch("OUCH!!!");
-	for (int i = pos; i < pos + 7; ++i) {
-		(tracks.back())[i].setOccupant(ouch[pos + i]);
+	int begin = pos;
+	for (int i = pos; i < pos+7; ++i) {
+		track[i].setOccupant(ouch[i-pos]);
 	}
 }
 
@@ -30,21 +40,9 @@ void Path::printEnd(char name) {
 	std::cout << name << " won" << std::endl;
 }
 
-void Path::pasteItems(Step* steps) {
-	for (int i = 0; i < Init::width; ++i) {
-		if (steps[i].isSnack()) {
-			this->step[i].putSnack();
-		}
-	}
-}
-
-bool Path::fillNewPath(Animal** racers) {
-	Step* track = new Step[Init::width];
-	if (curTrack != nullptr) {
-		pasteItems(curTrack);
-	}
+/*void Path::fillNewPath(Animal** racers) {
 	for (int i = 0; i < Init::racersNum; ++i) {
-		if (track[racers[i]->getPos()].isEmpty()) {
+		if (!track[racers[i]->getPos()].isOccup()) {
 			track[racers[i]->getPos()].setOccupant(racers[i]->getName());
 			if (track[racers[i]->getPos()].isSnack()) {
 				racers[i]->eatSnack();
@@ -57,15 +55,28 @@ bool Path::fillNewPath(Animal** racers) {
 			writeOuch(racers[i]->getPos());
 		}
 	}
-	curTrack = track;
-	return false;
+}*/
+
+void Path::update(Animal** racers) {
+	for (int i = 0; i < Init::racersNum; ++i) {
+		track[racers[i]->getPos()].setEmpty();
+		if (racers[i]->setPos()) {
+			finishFlag = true;
+		}
+		int racerPos = racers[i]->getPos();
+		if (track[racerPos].isSnack()) {
+			racers[i]->eatSnack();
+		}
+		track[racerPos].setOccupant(racers[i]->getName());
+	}
+	for (int i = 0; i < Init::racersNum; ++i) {
+		if (track[racers[i]->getPos()].isOccup() && racers[i]->getType() == "hare") {
+			racers[i]->bite();
+			writeOuch(racers[i]->getPos());
+		}
+	}
 }
 
-void Path::update() {
-	tracks.push_back(curTrack);
-	tracksNum++;
-}
-
-Step* Path::getCurTrack() {
-	return curTrack;
+bool Path::getFinishFlag() {
+	return finishFlag;
 }
