@@ -9,6 +9,7 @@ Hare::Hare(){
 Hare::~Hare(){}
 
 int Hare::defMove() {
+	_energy -= 2;
 	int randNum = defNum();
 	if (randNum <= 2) {
 		return 0;

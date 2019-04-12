@@ -25,15 +25,18 @@ bool Race::update() {
 
 void Race::process() {
 	time_t prevTime = 0;
-	while(!(path->getFinishFlag())){
+	while( 1 /*!(path->getFinishFlag())*/){
 		if (time(nullptr) - prevTime >= 1) {
 			path->update(racers);
+			if (path->getFinishFlag()) {
+				break;
+			}
 			path->print();
 			this->printEnergy();
 			prevTime = time(nullptr);
 		}
-		
 	}
+	winner = path->getWinner();
 	end();
 }
 

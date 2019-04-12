@@ -5,6 +5,7 @@
 Animal::Animal() {
 	_energy = 20;
 	_pos = 0;
+	sleepFlag = false;
 }
 
 Animal::~Animal() {}
@@ -24,18 +25,41 @@ bool Animal::isFinished() {
 
 bool Animal::setPos() {
 	_pos += defMove();
-	if (isOut()) {
+	if (_energy <= 0) {
+		_energy = 0;
+		sleepFlag = true;
+		return false;
+	}else if (isOut()) {
 		_pos = 0;
+		return false;
 	}
 	else if (isFinished()) {
 		_pos = 69;
 		return true;
 	}
-	return false;
 }
 
 int Animal::getPos() {
 	return _pos;
+}
+
+void Animal::decreaseEnergy(int val) {
+	_energy -= val;
+	if (_energy < 0) {
+		_energy = 0;
+	}
+}
+
+void Animal::setEnergy(int val) {
+	_energy = val;
+}
+
+void Animal::getUp() {
+	sleepFlag = false;
+}
+
+bool Animal::isSleep() {
+	return sleepFlag;
 }
 
 int Animal::getEnergy() {
@@ -51,7 +75,7 @@ char Animal::getName() {
 }
 
 void Animal::eatSnack() {
-	if (_energy >= 25) {
+	if (_energy >= 15) {
 		_energy = 20;
 	}
 	else {

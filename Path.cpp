@@ -4,10 +4,11 @@
 #include <string>
 
 Path::Path(){
-	racersPos = new int[Init::racersNum];
 	track = new Step[Init::width];
+	snacks = new bool[Init::width/10];
 	initTrack();
 	finishFlag = false;
+	winner = {"NULL", "NULL"};
 }
 
 Path::~Path(){
@@ -19,6 +20,9 @@ void Path::initTrack() {
 		if (i % 10 == 0) {
 			track[i].setOccupant('@');
 		}
+	}
+	for (int i = 0; i < Init::width / 10; ++i) {
+		snacks[i] = true;
 	}
 }
 
@@ -40,43 +44,60 @@ void Path::printEnd(char name) {
 	std::cout << name << " won" << std::endl;
 }
 
-/*void Path::fillNewPath(Animal** racers) {
-	for (int i = 0; i < Init::racersNum; ++i) {
-		if (!track[racers[i]->getPos()].isOccup()) {
-			track[racers[i]->getPos()].setOccupant(racers[i]->getName());
-			if (track[racers[i]->getPos()].isSnack()) {
-				racers[i]->eatSnack();
-				track[racers[i]->getPos()].rmSnack();
-			}
+void Path::fill(Step* track) {
+	int snackCount = 0;
+	for (int i = 0; i < Init::width; ++i) {
+		if(i % 10 == 0 && snacks[i / 10]){
+			track[i].setOccupant('@');
+			track[i].putSnack();
+			snackCount++;
+		}else if(i % 10 == 0 && !(snacks[i / 10])){
+			track[i].setOccupant(' ');
+			snackCount++;
 		}else {
-			if (racers[i]->getType() == "hare") {
-				racers[i]->bite();
-			}
-			writeOuch(racers[i]->getPos());
+			track[i].setOccupant(' ');
 		}
 	}
-}*/
+}
+
+void Path::putName(Animal* racer) {
+	if (track[racer->getPos()].getOccupant() == 'T' && racer->getName() == 'H' || track[racer->getPos()].getOccupant() == 'H' && racer->getName() == 'T') {
+		writeOuch(racer->getPos());
+	}
+	else {
+		track[racer->getPos()].setOccupant(racer->getName());
+	}
+}
 
 void Path::update(Animal** racers) {
+	delete[] track;
+	track = new Step[Init::width];
+	fill(track);
 	for (int i = 0; i < Init::racersNum; ++i) {
-		track[racers[i]->getPos()].setEmpty();
-		if (racers[i]->setPos()) {
-			finishFlag = true;
+		if (!(racers[i]->isSleep())) {
+			finishFlag = racers[i]->setPos();
+			if (finishFlag) {
+				winner = std::make_pair(racers[i]->getType(), racers[i]->getName());
+				return;
+			}
+		}else {
+			racers[i]->setEnergy(10);
+			racers[i]->getUp();
 		}
-		int racerPos = racers[i]->getPos();
-		if (track[racerPos].isSnack()) {
+		putName(racers[i]);
+		int pos = racers[i]->getPos();
+		if (track[pos].isSnack()) {
+			track[pos].rmSnack();
 			racers[i]->eatSnack();
-		}
-		track[racerPos].setOccupant(racers[i]->getName());
-	}
-	for (int i = 0; i < Init::racersNum; ++i) {
-		if (track[racers[i]->getPos()].isOccup() && racers[i]->getType() == "hare") {
-			racers[i]->bite();
-			writeOuch(racers[i]->getPos());
+			snacks[(pos/10)] = false;
 		}
 	}
 }
 
 bool Path::getFinishFlag() {
 	return finishFlag;
+}
+
+std::pair<std::string, std::string> Path::getWinner() {
+	return winner;
 }

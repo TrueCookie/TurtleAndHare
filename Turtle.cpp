@@ -9,6 +9,7 @@ Turtle::Turtle(){
 Turtle::~Turtle(){}
 
 int Turtle::defMove() {
+	_energy -= 2;
 	int randNum = defNum();
 	if (randNum >= 1 && randNum <= 5) {
 		return 3;
