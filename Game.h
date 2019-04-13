@@ -1,5 +1,5 @@
 #pragma once
-#include "Animal.h"//shld i do it
+#include "Animal.h"
 class Game{
 private:
 	int racersNum;

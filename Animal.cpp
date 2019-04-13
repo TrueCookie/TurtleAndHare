@@ -28,14 +28,15 @@ bool Animal::setPos() {
 	if (_energy <= 0) {
 		_energy = 0;
 		sleepFlag = true;
-		return false;
-	}else if (isOut()) {
+	}
+	if (isOut()) {
 		_pos = 0;
 		return false;
-	}
-	else if (isFinished()) {
+	}else if (isFinished()) {
 		_pos = 69;
 		return true;
+	}else {
+		return false;
 	}
 }
 

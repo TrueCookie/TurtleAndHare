@@ -21,7 +21,6 @@ public:
 	bool isSleep();
 	void getUp();
 	std::string getType();
-	//void setName();
 	char getName();
 	bool isOut();
 	bool isFinished();
